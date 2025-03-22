@@ -1,0 +1,1 @@
+export type UnknownInterface = any;

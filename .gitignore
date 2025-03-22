@@ -1,0 +1,17 @@
+node_modules/
+dist/
+npm-debug.log
+.env
+.DS_Store
+.idea/
+#/build
+#/.idea
+#/debug.log
+coverage
+logs
+aws.md
+schema.md
+readme.md
+security.md
+summary.md
+```
