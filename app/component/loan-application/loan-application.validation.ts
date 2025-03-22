@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 import AppValidation from '../../middleware/app.validation';
+import { ClientError } from '../../exception/client.error';
 
 const LoanApplicationValidation = {
   async validateLoanApplication(
@@ -31,6 +32,15 @@ const LoanApplicationValidation = {
       }),
     });
     return AppValidation.bodyBaseValidator(schema, request, response, next);
+  },
+  async validateFindLoanApplication(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ) {
+    if (!request.params.id)
+      throw new ClientError('loan application is required');
+    return next();
   },
 };
 export default LoanApplicationValidation;

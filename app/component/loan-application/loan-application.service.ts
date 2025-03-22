@@ -10,5 +10,16 @@ const LoanApplicationService = {
   }) {
     return db.LoanApplication.create(data);
   },
+  getOne(id: number) {
+    return db.LoanApplication.findByPk(id, {
+      include: [
+        {
+          model: db.Customer,
+          as: 'customer',
+          attributes: ['id', 'first_name', 'last_name', 'email'],
+        },
+      ],
+    });
+  },
 };
 export default LoanApplicationService;

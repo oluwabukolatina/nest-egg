@@ -28,6 +28,16 @@ class LoanApplicationController {
       monthly_payment: monthlyRepayment,
     });
   };
+  public getOne = async (request: Request, response: Response) => {
+    const { id } = request.params;
+    const loanApplication = await LoanApplicationService.getOne(Number(id));
+    if (!loanApplication) throw new NotFoundError('Loan application not found');
+    return ResponseHandler.OkResponse(
+      response,
+      'fetched one loan application',
+      { loanApplication },
+    );
+  };
 }
 
 export default LoanApplicationController;
