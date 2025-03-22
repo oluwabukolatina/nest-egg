@@ -3,7 +3,7 @@ import LoanApplicationModel from '../component/loan-application/loan-application
 import CustomerModel from '../component/customer/customer.model';
 import * as secret from '../config/secrets';
 
-const config = require('../../app/config/sequelize-config')[
+const config = require('../sequelize-config.js')[
   String(secret.ENVIRONMENT)
 ];
 

@@ -4,22 +4,22 @@
   "description": "Loan Application API for nestegg.ai",
   "main": "index.js",
   "scripts": {
-    "migrate": "sequelize-cli db:migrate --config app/config/sequelize-config.ts",
-    "db:seed": "NODE_ENV=production sequelize-cli db:seed:all --config app/config/sequelize-config.ts",
-    "migrate:prod": "NODE_ENV=production sequelize-cli db:migrate --config app/config/sequelize-config.ts",
-    "migrate:undo": "sequelize-cli db:migrate:undo --config app/config/sequelize-config.ts",
-    "migrate:undo:all": "sequelize-cli db:migrate:undo:all --config app/config/sequelize-config.ts",
+    "test": "NODE_ENV=ci sequelize-cli db:migrate:undo:all --config app/sequelize-config.js && NODE_ENV=ci sequelize-cli db:migrate --config app/sequelize-config.js && NODE_ENV=ci sequelize-cli db:seed:all --config app/sequelize-config.js && NODE_ENV=ci jest --detectOpenHandles --forceExit --verbose --testTimeout=500000",
+    "test:full": "NODE_ENV=test sequelize-cli db:migrate:undo:all --config app/sequelize-config.js && NODE_ENV=test sequelize-cli db:migrate --config app/sequelize-config.js && NODE_ENV=test sequelize-cli db:seed:all --config app/sequelize-config.js && NODE_ENV=test jest --watchAll --detectOpenHandles --forceExit --verbose --testTimeout=500000",
+    "migrate": "sequelize-cli db:migrate --config app/sequelize-config.js",
+    "db:seed": "NODE_ENV=production sequelize-cli db:seed:all --config app/sequelize-config.js",
+    "migrate:prod": "NODE_ENV=production sequelize-cli db:migrate --config app/sequelize-config.js",
+    "migrate:dev": "NODE_ENV=development sequelize-cli db:migrate --config app/sequelize-config.js",
+    "migrate:undo": "sequelize-cli db:migrate:undo --config app/sequelize-config.js",
+    "migrate:undo:all": "sequelize-cli db:migrate:undo:all --config app/sequelize-config.js",
     "migrate:create": "sequelize-cli migration:generate --name",
     "build": "tsc",
     "start": "node dist/app/server.js",
     "build-ts": "tsc",
     "dev": "nodemon app/server.ts",
-    "test": "NODE_ENV=ci jest --detectOpenHandles --forceExit --verbose --testTimeout=500000",
-    "watch-test": "jest --watchAll --detectOpenHandles --forceExit --coverage --verbose --testTimeout=7000",
-    "watch:no-c": "jest --watchAll --detectOpenHandles --forceExit --verbose --testTimeout=500000",
-    "lint": "tsc --noEmit && eslint '*/**/*.{js,ts}' --quiet --fix",
+    "lint": "tsc --noEmit && eslint '*/**/*.{ts}' --quiet --fix",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "lint:ts": "eslint --ext=jsx,ts app",
+    "lint:ts": "eslint --ext=ts app",
     "prettier:base": "prettier --parser typescript --single-quote",
     "prettier:write": "npm run prettier:base -- --write \"app/**/*.{ts,tsx}\"",
     "watch-ts": "tsc -w",
@@ -93,7 +93,7 @@
   },
   "precommit": "NODE_ENV=production lint-staged",
   "lint-staged": {
-    "app/**/*.{js,ts}": [
+    "app/**/*.{ts}": [
       "eslint --fix"
     ]
   }

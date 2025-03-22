@@ -16,17 +16,18 @@ class LoanApplicationController {
       parseFloat(annual_interest_rate),
       parseInt(term_months),
     );
-    ResponseHandler.CreatedResponse(
-      response,
-      'Loan application created successfully',
-    );
-    return LoanApplicationService.create({
+
+    const application = await LoanApplicationService.create({
       customer_id,
       amount,
       term_months,
       annual_interest_rate,
       monthly_payment: monthlyRepayment,
     });
+   return ResponseHandler.CreatedResponse(
+        response,
+        'Loan application created successfully', {data:application}
+    );
   };
   public getOne = async (request: Request, response: Response) => {
     const { id } = request.params;

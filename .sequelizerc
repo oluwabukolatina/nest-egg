@@ -1,8 +1,9 @@
-const path = require('path');
+require('ts-node/register');
 
+const path = require('path');
 module.exports = {
-  'config': path.resolve('config', 'sequelize-config.ts'),
-  'models-path': path.resolve('src', 'models'),
+  'config': path.resolve('app/config', 'sequelize-config.js'),
+  'models-path': path.resolve('app/models'),  // Changed from 'app', 'models'
   'seeders-path': path.resolve('seeders'),
-  'migrations-path': path.resolve('migrations')
+  'migrations-path': path.resolve('app/migrations')  // Added 'app/' prefix since it appears to be under the app directory
 };
