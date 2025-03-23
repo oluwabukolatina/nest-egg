@@ -42,12 +42,11 @@ jobs:
         run: npm test
         env:
           NODE_ENV: ci
-          DATABASE_HOST: localhost
-          DATABASE_PORT: 5432
-          DATABASE_NAME: test_db
-          DATABASE_USER: postgres
-          DATABASE_PASSWORD: postgres
-          DATABASE_SSL: "false"
+          TEST_DATABASE_HOST: ${{ secrets.TEST_DATABASE_HOST }}
+          TEST_DATABASE_PORT: ${{ secrets.TEST_DATABASE_PORT }}
+          TEST_DATABASE_NAME: ${{ secrets.TEST_DATABASE_NAME }}
+          TEST_DATABASE_USER: ${{ secrets.TEST_DATABASE_USER }}
+          TEST_DATABASE_PASSWORD: ${{ secrets.TEST_DATABASE_PASSWORD }}
 
   deploy-to-elastic-beanstalk:
     needs: build-and-test

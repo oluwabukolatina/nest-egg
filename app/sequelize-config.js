@@ -3,7 +3,10 @@ dotenv.config();
 module.exports = {
   test: {
     dialectOptions: {
-      ssl: false
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
     username: process.env.TEST_DATABASE_USER,
     password: process.env.TEST_DATABASE_PASSWORD,
