@@ -9,7 +9,5 @@ npm-debug.log
 #/debug.log
 coverage
 logs
-schema.md
-security.md
 summary.md
 ```
