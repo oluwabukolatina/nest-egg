@@ -47,6 +47,11 @@ jobs:
           TEST_DATABASE_NAME: ${{ secrets.TEST_DATABASE_NAME }}
           TEST_DATABASE_USER: ${{ secrets.TEST_DATABASE_USER }}
           TEST_DATABASE_PASSWORD: ${{ secrets.TEST_DATABASE_PASSWORD }}
+          DATABASE_HOST: ${{ secrets.TEST_DATABASE_HOST }}
+          DATABASE_PORT: ${{ secrets.TEST_DATABASE_PORT }}
+          DATABASE_NAME: ${{ secrets.TEST_DATABASE_NAME }}
+          DATABASE_USER: ${{ secrets.TEST_DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.TEST_DATABASE_PASSWORD }}
 
   deploy-to-elastic-beanstalk:
     needs: build-and-test
