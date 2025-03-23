@@ -1,12 +1,32 @@
-name: CI/CD Pipeline
-
+# CI/CD Pipeline Documentation
+This document describes the Continuous Integration and Continuous Deployment (CI/CD) pipeline for the Loan Application API.
+## Overview
+The CI/CD pipeline automates the building, testing, and deployment of the application to AWS Elastic Beanstalk. It uses GitHub Actions as the CI/CD platform.
+**Workflow Diagram**
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Code Push  │───►│    Build    │───►│    Test     │───►│   Deploy    │
+│  to GitHub  │    │             │    │             │    │  to AWS EB  │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+## GitHub Actions Workflow
+The workflow is defined in `.github/workflows/ci-cd.yml` and consists of two main jobs:
+1. build-and-test: Builds the application and runs tests 
+2. deploy-to-elastic-beanstalk: Deploys the application to AWS Elastic Beanstalk (only for the main branch)
+## Detailed Workflow Steps
+### Triggers
+The workflow is triggered on:
+- Push to the `main` branch
+```yaml
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
+```
+### Build and Test Job
+This job:
+- Checks out the code 
+- Sets up Node.js
+- Installs dependencies 
+- Runs tests with the test database
+```yaml
   build-and-test:
     runs-on: ubuntu-latest
 
@@ -37,7 +57,20 @@ jobs:
           DATABASE_NAME: ${{ secrets.TEST_DATABASE_NAME }}
           DATABASE_USER: ${{ secrets.TEST_DATABASE_USER }}
           DATABASE_PASSWORD: ${{ secrets.TEST_DATABASE_PASSWORD }}
+```
 
+### Deploy Job
+This job:
+- Only runs if the build-and-test job succeeds and it's a push to the main branch 
+- Checks out the code 
+- Sets up Node.js 
+- Installs dependencies 
+- Builds the TypeScript code 
+- Configures AWS credentials 
+- Installs production dependencies 
+- Creates a deployment package 
+- Deploys to Elastic Beanstalk
+```yaml
   deploy-to-elastic-beanstalk:
     needs: build-and-test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -94,3 +127,35 @@ jobs:
           deployment_package: deploy.zip
           use_existing_version_if_available: true
           wait_for_environment_recovery: 300
+```
+
+### **GitHub Secrets Configuration**
+The following secrets need to be configured in the GitHub repository:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+- TEST_DATABASE_HOST
+- TEST_DATABASE_PORT
+- TEST_DATABASE_NAME
+- TEST_DATABASE_USER
+- TEST_DATABASE_PASSWORD
+
+### Main Branch Deployment
+When code is pushed to the main branch:
+
+- The build-and-test job runs to verify the changes
+- If tests pass, the deployment job automatically deploys to Elastic Beanstalk
+
+### Deployment Package Structure
+The deployment package `(deploy.zip)` contains:
+- `dist/` - Compiled TypeScript code 
+- `node_modules/` - Production dependencies 
+- `package.json` - Package configuration 
+- `Procfile` - Elastic Beanstalk process configuration
+
+### Rollback Procedure
+In case of a failed deployment:
+- Navigate to the Elastic Beanstalk console 
+- Select the environment 
+- Go to "Application versions"
+- Select a previous working version 
+- Click "Deploy"

@@ -6,10 +6,8 @@ This document outlines the security practices implemented in the Loan Applicatio
 
 - [Input Validation](#input-validation)
 - [Database Security](#database-security)
-- [API Security](#api-setup)
+- [API Security](#api-security)
 - [Environment Variables and Secrets Management](#environment-variables-and-secrets-management)
-- [HTTPS Configuration](#https-configuration)
-- [Security Best Practices](#security-best-practices)
 
 ## Input Validation
 All API inputs are validated using the Joi validation library to prevent injection attacks and ensure data integrity.
