@@ -173,9 +173,9 @@ The backend is configured for deployment to AWS using Elastic Beanstalk.
 
 1. **AWS RDS PostgreSQL Instance**
    - Create a database-specific IAM authentication policy that allows the EC2 instances to connect to the RDS instance.
-      - Create a PostgreSQL database instance in AWS RDS
-      - Configure security groups to allow access from the Elastic Beanstalk environment
-      - Create a database and user with appropriate permissions.
+   - Create a PostgreSQL database instance in AWS RDS 
+   - Configure security groups to allow access from the Elastic Beanstalk environment 
+   - Create a database and user with appropriate permissions.
 2. **AWS Elastic Beanstalk Environment**
    - Create a new Elastic Beanstalk application
    - Create a new environment using the Node.js platform
