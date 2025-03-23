@@ -24,9 +24,10 @@ class LoanApplicationController {
       annual_interest_rate,
       monthly_payment: monthlyRepayment,
     });
-   return ResponseHandler.CreatedResponse(
-        response,
-        'Loan application created successfully', {data:application}
+    return ResponseHandler.CreatedResponse(
+      response,
+      'Loan application created successfully',
+      { data: application },
     );
   };
   public getOne = async (request: Request, response: Response) => {
